@@ -397,10 +397,6 @@ local scripts = {
 			url = "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua\"))()"
 		},
 		{
-			name = "MIRANDA HUB",
-			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaegg\"))()"
-		},
-		{
 			name = "ONHUB",
 			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/davizin713/ONhub/refs/heads/main/script.lua\", true))()"
 		},
