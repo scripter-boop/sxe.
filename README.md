@@ -19,7 +19,8 @@ local USE_WHITELIST = true  -- Set to true to use whitelist, false to use blackl
 local WHITELIST = {
 	"Player1",
 	"Player2",
-	"scripter-boop"
+	"scripter-boop",
+	"ratbu1435"
 }
 
 local BLACKLIST = {
@@ -440,6 +441,22 @@ contentTitle.Parent = content
 local scripts = {
 	NeedKey = {
 		{
+			name = "Ajjans",
+			url = "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/\"))()"
+		},
+		{
+			name = "Zn hub",
+			url = "loadstring(game:HttpGet(\"https://zeroinhub.com/api/script\"))()"
+		},
+		{
+			name = "speed hub",
+			url = "loadstring(game:HttpGet(\"https://pastefy.app/kQ2m1nSa/raw\"))()"
+		},
+		{
+			name = "Clover",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Ryuun0x/Clover/refs/heads/main/main.lua\"))()"
+		},
+		{
 			name = "NASI",
 			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua\"))()"
 		},
@@ -457,6 +474,14 @@ local scripts = {
 		},
 	},
 	Keyless = {
+		{
+			name = "Blyxo Hub",
+			url = "loadstring(game:HttpGet(\"https://flowauth.net/v1/loaders/\"))()"
+		},
+		{
+			name = "Horizon hub",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/HalisOnTop/Horizon/refs/heads/main/Loader.lua\"))()"
+		},
 		{
 			name = "BK HUB",
 			url = "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua\"))()"
