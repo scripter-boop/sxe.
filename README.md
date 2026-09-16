@@ -18,8 +18,8 @@ local playerGui = player:WaitForChild("PlayerGui")
 local USE_WHITELIST = true  -- Set to true to use whitelist, false to use blacklist
 local WHITELIST = {
 	"Player1",
-	"Player2",
-	"scripter-boop",
+	"player2",
+	"justin095025",
 	"ratbu123503"
 }
 
