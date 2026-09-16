@@ -380,6 +380,63 @@ description.ZIndex = 15
 description.Parent = content
 
 --==================================================
+-- SCRIPTS TABLE
+--==================================================
+
+local scripts = {
+	NeedKey = {
+		{
+			name = "NASI",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua\"))()"
+		},
+		{
+			name = "FYY",
+			url = "loadstring(game:HttpGet(\"https://FyyCommunity.my.id\"))()"
+		},
+		{
+			name = "BIG FROOT",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua\"))()"
+		},
+		{
+			name = "LENON",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/lennonxscripts/lennonhub/main/stealaegg.lua\"))()"
+		},
+	},
+	Keyless = {
+		{
+			name = "BK HUB",
+			url = "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua\"))()"
+		},
+		{
+			name = "MIRANDA HUB",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaegg\"))()"
+		},
+		{
+			name = "ONHUB",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/davizin713/ONhub/refs/heads/main/script.lua\", true))()"
+		},
+	},
+	Shader = {
+		{
+			name = "SIMPLE SHADER",
+			url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/robloxscripts2026/simple-shader/refs/heads/main/lua\"))()"
+		},
+	},
+	Owner = {
+		{
+			name = "KHOWEN",
+			url = "-- Owner: Khowen"
+		},
+	},
+	Discord = {
+		{
+			name = "DISCORD",
+			url = "-- Join our Discord for more scripts"
+		},
+	}
+}
+
+--==================================================
 -- CATEGORIES
 --==================================================
 
@@ -473,6 +530,19 @@ for i, data in ipairs(categories) do
 
 		contentTitle.Text = data.name
 		description.Text = data.description
+
+		-- Update with script information
+		local categoryScripts = scripts[data.id]
+		if categoryScripts then
+			local scriptText = ""
+			for j, script in ipairs(categoryScripts) do
+				scriptText = scriptText .. script.name
+				if j < #categoryScripts then
+					scriptText = scriptText .. "\n"
+				end
+			end
+			description.Text = scriptText
+		end
 
 		for _, otherButton in ipairs(buttons) do
 
