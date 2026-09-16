@@ -20,7 +20,7 @@ local WHITELIST = {
 	"Player1",
 	"Player2",
 	"scripter-boop",
-	"ratbu1435"
+	"ratbu123503"
 }
 
 local BLACKLIST = {
