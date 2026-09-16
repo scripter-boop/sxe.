@@ -12,6 +12,71 @@ local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
 --==================================================
+-- ACCESS CONTROL SETTINGS
+--==================================================
+
+local USE_WHITELIST = true  -- Set to true to use whitelist, false to use blacklist
+local WHITELIST = {
+	"Player1",
+	"Player2",
+	"scripter-boop"
+}
+
+local BLACKLIST = {
+	"BadPlayer1",
+	"BadPlayer2",
+	"Exploiter123"
+}
+
+--==================================================
+-- ACCESS CHECK FUNCTION
+--==================================================
+
+local function isPlayerAllowed()
+	local playerName = player.Name
+	
+	if USE_WHITELIST then
+		-- Whitelist mode: only allow listed players
+		for _, whitelistedName in ipairs(WHITELIST) do
+			if playerName == whitelistedName then
+				return true
+			end
+		end
+		return false
+	else
+		-- Blacklist mode: block listed players
+		for _, blacklistedName in ipairs(BLACKLIST) do
+			if playerName == blacklistedName then
+				return false
+			end
+		end
+		return true
+	end
+end
+
+--==================================================
+-- CHECK ACCESS BEFORE LOADING UI
+--==================================================
+
+if not isPlayerAllowed() then
+	local accessDeniedGui = Instance.new("ScreenGui")
+	accessDeniedGui.Name = "AccessDenied"
+	accessDeniedGui.ResetOnSpawn = false
+	accessDeniedGui.Parent = playerGui
+	
+	local accessDeniedLabel = Instance.new("TextLabel")
+	accessDeniedLabel.Size = UDim2.fromScale(1, 1)
+	accessDeniedLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	accessDeniedLabel.Text = "ACCESS DENIED"
+	accessDeniedLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+	accessDeniedLabel.TextSize = 48
+	accessDeniedLabel.Font = Enum.Font.GothamBold
+	accessDeniedLabel.Parent = accessDeniedGui
+	
+	return  -- Stop script execution
+end
+
+--==================================================
 -- SETTINGS
 --==================================================
 
