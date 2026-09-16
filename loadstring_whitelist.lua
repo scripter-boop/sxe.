@@ -28,6 +28,43 @@ if not isWhitelisted() then
 end
 
 --==================================================
+-- BASE64 DECODER (Simple Implementation)
+--==================================================
+
+local base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+
+local function base64_decode(str)
+	str = str:gsub("[^" .. base64_table .. "=]", "")
+	local output = {}
+	for i = 1, #str, 4 do
+		local b1, b2, b3, b4 = str:byte(i, i + 3)
+		
+		b1 = b1 and (base64_table:find(string.char(b1)) - 1) or 0
+		b2 = b2 and (base64_table:find(string.char(b2)) - 1) or 0
+		b3 = b3 and (base64_table:find(string.char(b3)) - 1) or 0
+		b4 = b4 and (base64_table:find(string.char(b4)) - 1) or 0
+		
+		if b1 or b2 or b3 or b4 then
+			table.insert(output, string.char(bit32.bor(bit32.lshift(b1, 2), bit32.rshift(b2, 4))))
+			if b3 ~= 64 then
+				table.insert(output, string.char(bit32.bor(bit32.lshift(bit32.band(b2, 15), 4), bit32.rshift(b3, 2))))
+			end
+			if b4 ~= 64 then
+				table.insert(output, string.char(bit32.bor(bit32.lshift(bit32.band(b3, 3), 6), b4)))
+			end
+		end
+	end
+	return table.concat(output)
+end
+
+--==================================================
+-- ENCODED URL (Base64 Obfuscated)
+--==================================================
+
+local encodedUrl = "aHR0cHM6Ly9naXRodWIuY29tL3NjcmlwdGVyLWJvb3Avc3hlLi9ibG9iL21haW4vUkVBRE1FLm1kP3BsYWluPTEjTDQ="
+local sourceUrl = base64_decode(encodedUrl)
+
+--==================================================
 -- MAIN UI CODE
 --==================================================
 
