@@ -323,14 +323,35 @@ contentCorner.CornerRadius = UDim.new(0, 10)
 contentCorner.Parent = content
 
 --==================================================
+-- CONTENT SCROLL FRAME
+--==================================================
+
+local scrollFrame = Instance.new("ScrollingFrame")
+scrollFrame.Name = "ScrollFrame"
+
+scrollFrame.Size = UDim2.new(1, -30, 1, -60)
+scrollFrame.Position = UDim2.new(0, 15, 0, 50)
+
+scrollFrame.BackgroundTransparency = 1
+scrollFrame.BorderSizePixel = 0
+
+scrollFrame.ScrollBarThickness = 8
+scrollFrame.ScrollBarImageColor3 = Color3.fromRGB(100, 80, 150)
+
+scrollFrame.CanvasSize = UDim2.new(1, 0, 0, 0)
+
+scrollFrame.ZIndex = 15
+scrollFrame.Parent = content
+
+--==================================================
 -- CONTENT TITLE
 --==================================================
 
 local contentTitle = Instance.new("TextLabel")
 contentTitle.Name = "ContentTitle"
 
-contentTitle.Size = UDim2.new(1, -30, 0, 40)
-contentTitle.Position = UDim2.new(0, 15, 0, 18)
+contentTitle.Size = UDim2.new(1, 0, 0, 40)
+contentTitle.Position = UDim2.new(0, 0, 0, 0)
 
 contentTitle.BackgroundTransparency = 1
 contentTitle.Text = "NEED KEY"
@@ -346,38 +367,6 @@ contentTitle.TextXAlignment =
 
 contentTitle.ZIndex = 15
 contentTitle.Parent = content
-
---==================================================
--- DESCRIPTION
---==================================================
-
-local description = Instance.new("TextLabel")
-description.Name = "Description"
-
-description.Size = UDim2.new(1, -30, 0, 100)
-description.Position = UDim2.new(0, 15, 0, 65)
-
-description.BackgroundTransparency = 1
-
-description.Text =
-	"Scripts or features that require a key."
-
-description.TextColor3 =
-	Color3.fromRGB(225, 225, 235)
-
-description.TextSize = 13
-description.Font = Enum.Font.Gotham
-
-description.TextWrapped = true
-
-description.TextXAlignment =
-	Enum.TextXAlignment.Left
-
-description.TextYAlignment =
-	Enum.TextYAlignment.Top
-
-description.ZIndex = 15
-description.Parent = content
 
 --==================================================
 -- SCRIPTS TABLE
@@ -480,6 +469,69 @@ local categories = {
 }
 
 --==================================================
+-- SCRIPT BUTTON GENERATOR
+--==================================================
+
+local function createScriptButtons(category)
+	
+	-- Clear existing script buttons
+	for _, child in ipairs(scrollFrame:GetChildren()) do
+		if child.Name:match("ScriptButton") then
+			child:Destroy()
+		end
+	end
+	
+	local categoryScripts = scripts[category]
+	
+	if categoryScripts then
+		local totalHeight = 0
+		
+		for i, script in ipairs(categoryScripts) do
+			local scriptButton = Instance.new("TextButton")
+			scriptButton.Name = "ScriptButton" .. i
+			
+			scriptButton.Size = UDim2.new(1, 0, 0, 35)
+			scriptButton.Position = UDim2.new(0, 0, 0, totalHeight)
+			
+			scriptButton.BackgroundColor3 = Color3.fromRGB(40, 30, 80)
+			scriptButton.BackgroundTransparency = 0.20
+			
+			scriptButton.BorderSizePixel = 0
+			
+			scriptButton.Text = script.name
+			scriptButton.TextColor3 = Color3.fromRGB(200, 200, 255)
+			scriptButton.TextSize = 12
+			scriptButton.Font = Enum.Font.GothamBold
+			
+			scriptButton.AutoButtonColor = true
+			
+			scriptButton.ZIndex = 15
+			scriptButton.Parent = scrollFrame
+			
+			local buttonCorner = Instance.new("UICorner")
+			buttonCorner.CornerRadius = UDim.new(0, 6)
+			buttonCorner.Parent = scriptButton
+			
+			-- Button click functionality
+			scriptButton.Activated:Connect(function()
+				if script.url:match("^loadstring") then
+					loadstring(script.url)()
+				else
+					-- For non-executable entries
+					print(script.url)
+				end
+			end)
+			
+			totalHeight = totalHeight + 40
+		end
+		
+		-- Update scroll canvas size
+		scrollFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+	end
+	
+end
+
+--==================================================
 -- CATEGORY BUTTONS
 --==================================================
 
@@ -529,20 +581,7 @@ for i, data in ipairs(categories) do
 	button.Activated:Connect(function()
 
 		contentTitle.Text = data.name
-		description.Text = data.description
-
-		-- Update with script information
-		local categoryScripts = scripts[data.id]
-		if categoryScripts then
-			local scriptText = ""
-			for j, script in ipairs(categoryScripts) do
-				scriptText = scriptText .. script.name
-				if j < #categoryScripts then
-					scriptText = scriptText .. "\n"
-				end
-			end
-			description.Text = scriptText
-		end
+		createScriptButtons(data.id)
 
 		for _, otherButton in ipairs(buttons) do
 
@@ -574,6 +613,8 @@ if buttons[1] then
 		Color3.fromRGB(75, 50, 135)
 
 	buttons[1].BackgroundTransparency = 0.02
+	
+	createScriptButtons(categories[1].id)
 
 end
 
